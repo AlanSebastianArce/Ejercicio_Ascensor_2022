@@ -1,26 +1,20 @@
 <?php
 
-include_once('ascensor.php');
-
-$nuevoAscensor = new Ascensor();
-
+include_once 'ascensor.php';
+$nuevoAscensor=new Ascensor();
 $nuevoAscensor->setPesoMaximoPermitido(500);
 $nuevoAscensor->setCantidadMaximaPersonas(5);
 $nuevoAscensor->addPersona(70);
-$nuevoAscensor->addPersona(120);
-$nuevoAscensor->addPersona(100);
-$nuevoAscensor->addPersona(120);
-$nuevoAscensor->addPersona(120);
-var_dump($nuevoAscensor);
+$nuevoAscensor->addPersona(80);
+$nuevoAscensor->addPersona(70);
 
-echo ($nuevoAscensor->countPersonas());
-echo ($nuevoAscensor->pesoTotal());
-echo ($nuevoAscensor->verificarCantidadPersonas()); 
-echo ($nuevoAscensor->verificarPesoMaximo());
+$valorVerificacion=$nuevoAscensor->encenderAlarma();
 
-
-$valorVerificacion = $nuevoAscensor->encenderAlarma();
 if ($valorVerificacion)
-    echo "Normal";
+echo "Todo Normal";
 else
-    echo "Encender Alarma";
+echo "Activar Alarma";
+
+
+
+?>

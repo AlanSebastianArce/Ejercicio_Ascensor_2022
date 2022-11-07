@@ -1,31 +1,13 @@
 <?php
 
 include_once('persona.php');
+include_once('elevador.php');
 
-class Ascensor
+class Ascensor extends Elevador
 {
-
-  private $id;
-  private $pesoMaximoPermitido;
   private $cantidadMaxPersonas;
-  private $ubicacion;
-  private $apertura;
   private $personas = [];
 
-  public function getId()
-  {
-    return $this->id;
-  }
-
-  public function getPesoMaximoPermitido()
-  {
-    return $this->pesoMaximoPermitido;
-  }
-
-  public function setPesoMaximoPermitido($nuevoPesoMaximo)
-  {
-    $this->pesoMaximoPermitido = $nuevoPesoMaximo;
-  }
 
   public function getCantidadMaximaPersonas()
   {
@@ -40,7 +22,7 @@ class Ascensor
   public function addPersona($pesoPersona)
   {
     $nuevaPersona = new Persona();
-    $nuevaPersona->setPeso($pesoPersona);
+    $nuevaPersona->setPesos($pesoPersona);
     array_push($this->personas, $nuevaPersona);
   }
 
@@ -58,27 +40,29 @@ class Ascensor
     return count($this->personas);
   }
 
-  public function verificarPesoMaximo()
+
+  private function verficarPesoMaximo()
   {
     $pesoTotalPersonas = $this->pesoTotal();
-    if ($pesoTotalPersonas > $this->pesoMaximoPermitido) {
+    if ($pesoTotalPersonas > $this->getPesoMaximoPermitido()) {
       return false;
-    } else
-      return true;
+    }
+    return true;
   }
 
-  public function verificarCantidadPersonas()
+
+  private function verificarCantidadPersonas()
   {
     $totalPersonas = $this->countPersonas();
     if ($totalPersonas > $this->cantidadMaxPersonas) {
       return false;
-    } else
-      return true;
+    }
+    return true;
   }
-
+  
   public function encenderAlarma()
   {
-    if ($this->verificarPesoMaximo() && $this->verificarCantidadPersonas()) {
+    if ($this->verificarCantidadPersonas() && ($this->verficarPesoMaximo())) {
       return true;
     }
     return false;
